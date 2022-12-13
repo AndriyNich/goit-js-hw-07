@@ -1,7 +1,19 @@
 import {galleryItems} from './gallery-items.js'
-// Change code below this line
 
-// import * as basicLightbox from 'basiclightbox'
+// прописуємо стилі і бібліотеку basicLightbox
+document
+  .querySelector('link')
+  .insertAdjacentHTML(
+    'beforebegin',
+    '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basiclightbox@5.0.4/dist/basicLightbox.min.css" />',
+  )
+
+const scriptLoadLib = document.createElement('script')
+scriptLoadLib.src =
+  'https://cdn.jsdelivr.net/npm/basiclightbox@5.0.4/dist/basicLightbox.min.js'
+document.querySelector('script').append(scriptLoadLib)
+
+// оголошення
 
 const refGalleryContainer = document.querySelector('div.gallery')
 
@@ -26,16 +38,30 @@ const inputGalleryToDocument = innerHtml => {
   refGalleryContainer.innerHTML = createGallery(galleryItems)
 }
 
-inputGalleryToDocument()
+const turnOnScroll = () => {
+  document.body.style.paddingRight = 0
+  document.body.style.overflowY = 'visible'
+}
 
 const onGalleryClick = event => {
-  console.log(event.target.dataset.source)
-  const instance = basicLightbox
+  event.preventDefault()
+
+  basicLightbox
     .create(
       `
     <img src="${event.target.dataset.source}" width="800" height="600">`,
     )
     .show()
+
+  document.body.style.paddingRight = '15px'
+  document.body.style.overflowY = 'hidden'
+  document
+    .querySelector('.basicLightbox')
+    .addEventListener('click', turnOnScroll, {once: true})
 }
+
+// тіло
+
+inputGalleryToDocument()
 
 refGalleryContainer.addEventListener('click', onGalleryClick)
