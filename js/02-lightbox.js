@@ -79,7 +79,7 @@ gallery.on('close.simplelightbox', () => {
 })
 gallery.on('closed.simplelightbox', () => {
   console.log('closed')
-  document.body.style.paddingRight = 0
+  //   document.body.style.paddingRight = 0
 })
 
 refGalleryContainer.addEventListener('click', onGalleryClick)
