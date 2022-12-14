@@ -67,7 +67,10 @@ const onGalleryClick = event => {
 // тіло
 inputGalleryToDocument()
 
-gallery = new SimpleLightbox('.gallery a')
+gallery = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+})
 gallery.on('show.simplelightbox', () => {
   console.log('start show')
 })
