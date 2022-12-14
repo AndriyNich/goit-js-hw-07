@@ -14,6 +14,7 @@ scriptLoadLib.src =
 document.querySelector('script').append(scriptLoadLib)
 
 // оголошення
+let modalWindow
 
 const refGalleryContainer = document.querySelector('div.gallery')
 
@@ -34,7 +35,7 @@ const createGallery = galleryItems =>
     )
     .join('')
 
-const inputGalleryToDocument = innerHtml => {
+const inputGalleryToDocument = () => {
   refGalleryContainer.innerHTML = createGallery(galleryItems)
 }
 
@@ -43,21 +44,43 @@ const turnOnScroll = () => {
   document.body.style.overflowY = 'visible'
 }
 
+const turnOffScroll = () => {
+  document.body.style.paddingRight = '15px'
+  document.body.style.overflowY = 'hidden'
+}
+
+const onKeyDownEsc = event => {
+  if (!document.querySelector('.basicLightbox')) {
+    document.body.removeEventListener('keydown', onKeyDownEsc)
+    return
+  }
+
+  if (event.code === 'Escape') {
+    modalWindow.close()
+    turnOnScroll()
+    return
+  }
+}
+
+const openModalWindow = () => {
+  modalWindow = basicLightbox.create(
+    `
+    <img src="${event.target.dataset.source}" width="800" height="600">`,
+  )
+  modalWindow.show()
+}
+
 const onGalleryClick = event => {
   event.preventDefault()
 
-  basicLightbox
-    .create(
-      `
-    <img src="${event.target.dataset.source}" width="800" height="600">`,
-    )
-    .show()
+  openModalWindow()
 
-  document.body.style.paddingRight = '15px'
-  document.body.style.overflowY = 'hidden'
+  turnOffScroll()
+
   document
     .querySelector('.basicLightbox')
     .addEventListener('click', turnOnScroll, {once: true})
+  document.body.addEventListener('keydown', onKeyDownEsc)
 }
 
 // тіло
