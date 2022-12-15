@@ -71,6 +71,8 @@ const onKeyDownEsc = event => {
 }
 
 const onGalleryClick = event => {
+  if (![...event.target.classList].includes('gallery__image')) return
+
   event.preventDefault()
 
   openModalWindow(event)
