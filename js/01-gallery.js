@@ -49,6 +49,14 @@ const turnOffScroll = () => {
   document.body.style.overflowY = 'hidden'
 }
 
+const openModalWindow = event => {
+  modalWindow = basicLightbox.create(
+    `
+    <img src="${event.target.dataset.source}" width="800" height="600">`,
+  )
+  modalWindow.show()
+}
+
 const onKeyDownEsc = event => {
   if (!document.querySelector('.basicLightbox')) {
     document.body.removeEventListener('keydown', onKeyDownEsc)
@@ -60,14 +68,6 @@ const onKeyDownEsc = event => {
     turnOnScroll()
     return
   }
-}
-
-const openModalWindow = (event) => {
-  modalWindow = basicLightbox.create(
-    `
-    <img src="${event.target.dataset.source}" width="800" height="600">`,
-  )
-  modalWindow.show()
 }
 
 const onGalleryClick = event => {
