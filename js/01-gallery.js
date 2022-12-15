@@ -11,7 +11,7 @@ document
 const scriptLoadLib = document.createElement('script')
 scriptLoadLib.src =
   'https://cdn.jsdelivr.net/npm/basiclightbox@5.0.4/dist/basicLightbox.min.js'
-document.querySelector('script').append(scriptLoadLib)
+document.querySelector('script').before(scriptLoadLib)
 
 // оголошення
 let modalWindow
@@ -62,7 +62,7 @@ const onKeyDownEsc = event => {
   }
 }
 
-const openModalWindow = () => {
+const openModalWindow = (event) => {
   modalWindow = basicLightbox.create(
     `
     <img src="${event.target.dataset.source}" width="800" height="600">`,
@@ -73,7 +73,7 @@ const openModalWindow = () => {
 const onGalleryClick = event => {
   event.preventDefault()
 
-  openModalWindow()
+  openModalWindow(event)
 
   turnOffScroll()
 
